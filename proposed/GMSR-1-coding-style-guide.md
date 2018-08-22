@@ -138,15 +138,6 @@ Optional parameters MUST be enclosed in `[]`, and contain the default value, aft
 
 There MUST be a blank line under the JSDoc block.
 
-### 4.2. Script parameter declaration
-
-Optional parameters MUST come last in the argument list.
-
-If a script has no optional parameters, the `argument0` structure MUST be used. If there is one or more 
-optional parameters in a script, the `argument[0]` (array notation) MUST be used. 
-
-If there are optional parameters, the script MUST include logic to error out if there are missing arguments.
-
 A proper script looks like the following. Note the placement of parentheses, commas, spaces, braces, comments:
 
 **is_same**
@@ -174,7 +165,15 @@ if (_a.object_index == _b.object_index) {
 return false;
 ~~~
 
-An example script with optional parameters:
+### 4.2. Script parameter declaration
+
+Optional parameters MUST come last in the argument list.
+
+If a script has no optional parameters, the `argument0` structure MUST be used. If there is one or more 
+optional parameters in a script, the `argument[0]` (array notation) MUST be used. 
+
+If there are optional parameters, the script MUST include logic to error out if there are missing arguments.
+
 **add_value**
 ~~~gml
 /// @description Adds two values. Default adds one.
