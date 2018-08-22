@@ -1,6 +1,6 @@
 # Coding Style Guide
 
-This guide extends and expands on [GMSR-0], the basic coding standard.
+This guide extends and expands on [GMSR-0](GMSR-0-basic-coding-standard.md), the basic coding standard.
 
 The intent of this guide is to reduce cognitive friction when scanning code
 from different authors. It does so by enumerating a shared set of rules and
@@ -17,7 +17,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
 interpreted as described in [RFC 2119].
 
 [RFC 2119]: http://www.ietf.org/rfc/rfc2119.txt
-[PSR-0]: https://github.com/RobQuistNL/GameMakerStandards/blob/master/accepted/GMSR-0-basic-coding-standard.md
+[GMSR-0]: GMSR-0-basic-coding-standard.md
 
 
 ## 1. Overview
@@ -101,6 +101,8 @@ The term "objects" refers to object type assets.
 
 ### 3.1. Properties
 
+Properties should be written in `camelCase`.
+
 Visibility MUST be declared on all properties.
 
 There MUST NOT be more than one property declared per statement.
@@ -108,18 +110,21 @@ There MUST NOT be more than one property declared per statement.
 Property names SHOULD be prefixed with a single underscore to indicate
 protected or private visibility.
 
+Temporary variables MUST use the keyword `var`.
+
 A property declaration looks like the following.
 
 **obj_controller**:*Create event*
 ~~~gml
 showGui = true;
 debugMode = true;
-_debugLines = ds_list_create();
+_privateVariable = ds_list_create();
+var tempScopeVariable = 0;
 ~~~
 
 ### 4. Scripts
 
-Internal scripts MUST be prefixed with an underscore.
+### 4.1. Script documentation
 
 Scripts SHOULD contain a description in a JSDoc Style comment block at the first line.
 
@@ -127,9 +132,18 @@ If the description spans over multiple lines, all lines apart from the first MUS
 
 Scripts MUST contain the parameters in a JSDoc Style comment block, at the first line, or after the description.
 
-Optional parameters MUST be enclosed in `[]`.
+Optional parameters MUST be enclosed in `[]`, and contain the default value, after an `=` sign.
 
 There MUST be a blank line under the JSDoc block.
+
+### 4.2. Script parameter declaration
+
+Optional parameters MUST come last in the argument list.
+
+If a script has no optional parameters, the `argument0` structure MUST be used. If there is one or more 
+optional parameters in a script, the `argument[0]` (array notation) MUST be used. 
+
+If there are optional parameters, the script MUST include logic to error out if there are missing arguments.
 
 A proper script looks like the following. Note the placement of parentheses, commas, spaces, braces, comments:
 
@@ -139,7 +153,7 @@ A proper script looks like the following. Note the placement of parentheses, com
     /// Strict checking will make sure they are the same instance.
 /// @param {real} a The instance to match
 /// @param {real} b The second instance to match
-/// @param {bool} [strict] Make sure its the same instance instead of only type
+/// @param {bool} strict Make sure its the same instance instead of only type
 
 var _a = arugment0;
 var _b = arugment1;
@@ -156,6 +170,61 @@ if (_a.object_index == _b.object_index) {
     return true;
 }
 return false;
+~~~
+
+An example script with optional parameters:
+**add_value**
+~~~gml
+/// @description Adds two values. Default adds one.
+/// @param {real} a The original value
+/// @param {real} [b = 1] The value to be added, default 1
+
+if (argument_count < 1) {
+    show_error("Missing arguments!", true);
+}
+
+var _a = argument[0];
+var _b = 1;
+if (argument_count >= 2) {
+    _b = argument[1];
+}
+
+return _a + _b;
+~~~ 
+
+### 4.3. Script return values
+
+If a script returns a unknown or undefined value, it MUST NOT return `-1`. 
+It SHOULD return `undefined` and MAY return `noone`.
+
+> N.B.: The YYC compiled version likes to use `-1` as `id` in certain situations.
+> This differs from VM and may cause unexpected bugs.
+> The documentation also warns the use of `-1`
+
+
+### 4.4. Script calls
+
+When making a method or function call, there MUST NOT be a space between the method or 
+function name and the opening parenthesis, there MUST NOT be a space after the opening 
+parenthesis, and there MUST NOT be a space before the closing parenthesis. In the 
+argument list, there MUST NOT be a space before each comma, and there MUST be one space 
+after each comma.
+
+~~~gml
+var outcome = add_value(1, 4);
+~~~
+
+Argument lists MAY be split across multiple lines, where each subsequent line is indented once. 
+When doing so, the first item in the list MUST be on the next line, and there MUST be only one 
+argument per line.
+
+~~~gml
+long_function(
+    "A long argument input",
+    "Some more input",
+    20,
+    c_white
+);
 ~~~
 
 ## 5. Control Structures
@@ -189,6 +258,20 @@ if (expression1) {
 } else {
     // else body;
 }
+~~~
+
+The `else` and `elseif` statements SHOULD BE avoided as much as possible. Using early returns 
+reduces cyclomatic complexity and makes code more readable. Example:
+~~~gml
+if (expression1) {
+    return "something";
+}
+
+if (expression2) {
+    return "something2";
+}
+
+return "unknown";
 ~~~
 
 ### 5.2. `switch`, `case`

@@ -37,19 +37,21 @@ interpreted as described in [RFC 2119].
 
 ## 2.2. Naming
 
-- All names after the prefixes MUST be `snake_case` (Example: `snd_pickup_item`)
+- All names after the prefixes SHOULD BE `camelCase` or `snake_case`. 
+This MUST BE consistent throughout the project scope. (Example: `snd_pickup_item` or `snd_pickupItem`)
 
 ## 3. GML declarations
 
 - Macro's / Constants MUST be declared in all upper case with underscore seperators.
 - Enums MUST be declared in `snake_case` (lower case with underscore seperators), prefixed with `e_`.
-- Global variables MUST NOT use `globalvar` but MUST use `global.` 
+- Global variables MUST use the `global.` prefix.
+- `globalvar` MUST NEVER be used. 
 
 For example:
 ```gml
-#macro _LIVECODING false
-#macro acceptance:_LIVECODING false
-#macro debug:_LIVECODING true
+#macro LIVE_CODING false
+#macro acceptance:LIVE_CODING false
+#macro debug:LIVE_CODING true
 
 enum e_team_colours {
     red,
