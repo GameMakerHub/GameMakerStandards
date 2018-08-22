@@ -76,6 +76,8 @@ There MUST NOT be more than one subsequent blank lines.
 
 There MUST NOT be more than one statement per line.
 
+There MUST be a semicolon (`;`) after each statement.
+
 ### 2.2. Indenting
 
 Code MUST use an indent of 4 spaces, and MUST NOT use tabs for indenting.
@@ -196,11 +198,31 @@ return _a + _b;
 
 If a script returns a unknown or undefined value, it MUST NOT return `-1`. 
 It SHOULD return `undefined` and MAY return `noone`.
+A script SHOULD return a value as soon as possible.
 
 > N.B.: The YYC compiled version likes to use `-1` as `id` in certain situations.
 > This differs from VM and may cause unexpected bugs.
 > The documentation also warns the use of `-1`
 
+**sort_script**
+~~~gml
+/// @description Sorts values.
+/// @param {real} a The original value
+/// @param {real} b Comparison value
+
+var _a = argument0;
+var _b = argument1;
+
+if (_a > _b) {
+    return 1;
+}
+
+if (_a < _b) {
+    return -1; // Valid because it is an absolute value for a sorting algorithm.
+}
+
+return 0; // Equal
+~~~
 
 ### 4.4. Script calls
 
@@ -342,4 +364,46 @@ parentheses, spaces, and braces.
 repeat (10) {
     // repeat body
 }
+~~~
+
+## 6. Operators and formatting
+
+Operators MUST be surrounded by a space. Unary operators MUST NOT be surrounded by a 
+space, but MUST be attached to their variable.
+
+~~~gml
+var a = 2 + 1;
+
+for (var _i = 0; _i < 0; _i++) {
+    // code
+}
+~~~
+
+### 6.1. String concatenation
+
+Strings MUST be concatinated with spaces.
+Strings spanning multiple lines MUST be indented and the concatenation character 
+MUST reside on the same line.
+
+~~~gml
+my_string = "This is string number " + string(number) + "!\n" +
+    "'t is a very long string indeed, " +
+    "but luckily we can span multiple lines.";
+~~~
+
+
+
+## 7. Comments
+
+Single-line comments MUST use two forward slashes (`//`) followed by a space. 
+Only script documentation uses three; `///`.
+Multi-line comments MUST use `/*` and `*/` and both SHOULD reside on a single line.
+
+~~~gml
+// This is a single line
+
+/*
+This is a 
+Multi-line comment
+*/
 ~~~
