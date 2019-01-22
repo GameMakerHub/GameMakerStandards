@@ -103,14 +103,17 @@ The term "objects" refers to object type assets.
 
 ### 3.1. Properties
 
-Properties should be written in `camelCase`.
-
-Visibility MUST be declared on all properties.
+Properties SHOULD be written in `camelCase`.
 
 There MUST NOT be more than one property declared per statement.
 
-Property names SHOULD be prefixed with a single underscore to indicate
-protected or private visibility.
+Visibility MUST be declared on all properties - as there is no support for visibility we do this using underscores.
+
+Property names SHOULD NOT be prefixed with underscores to indicate *public* visibility.
+
+Property names SHOULD be prefixed with a single underscore to indicate *protected* visibility.
+
+Property names SHOULD be prefixed with double underscores to indicate *private* visibility.
 
 Temporary variables MUST use the keyword `var`.
 
@@ -118,10 +121,11 @@ A property declaration looks like the following.
 
 **obj_controller**:*Create event*
 ~~~gml
-showGui = true;
-debugMode = true;
-_privateVariable = ds_list_create();
-var tempScopeVariable = 0;
+showGui = true; //Public
+debugMode = true; //Public
+__privateVariable = ds_list_create();
+_protectedValue = 4;
+var __tempScopeVariable = 0;
 ~~~
 
 ### 4. Scripts
