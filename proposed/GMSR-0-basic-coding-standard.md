@@ -34,18 +34,18 @@ interpreted as described in [RFC 2119].
 - Timelines MUST be prefixed with `tl_`
 - Objects MUST be prefixed with `obj_`
 - Rooms MUST be prefixed with `room_`
+- Enumrators MUST be prefixed with `e_`
 
 ## 2.2. Naming
 
-- All names after the prefixes SHOULD BE `camelCase` or `snake_case`. 
-This MUST BE consistent throughout the project scope. (Example: `snd_pickup_item` or `snd_pickupItem`)
+- All names after the prefixes MUST be `camelCase` or `snake_case`.
+This MUST consistent throughout the project scope. (Example: `snd_pickup_item` or `snd_pickupItem`)
 
 ## 3. GML declarations
 
-- Macro's / Constants MUST be declared in all upper case with underscore seperators.
-- Enums MUST be declared in `snake_case` (lower case with underscore seperators), prefixed with `e_`.
+- Macro's / Constants MUST be declared in all upper case with underscore seperators. ( `MACRO_NAME` )
 - Global variables MUST use the `global.` prefix.
-- `globalvar` MUST NEVER be used. 
+- `globalvar` MUST NEVER be used.
 
 For example:
 ```gml
@@ -64,7 +64,7 @@ enum e_team_colours {
 
 ## 4. Package prefixing
 
-All asset names and global variables in packages SHOULD be prefixed with a uppercase, short abbreviation. 
+All asset names and global variables in packages MUST be prefixed with an uppercase, short abbreviation. 
 Example: ``Fast Particle System`` will be ``FPS_obj_controller`` and ``FPS_sh_vertexShader``.
 Enums and macro definitions MUST follow this standard as well;
 ```gml
@@ -87,8 +87,7 @@ and are tended to be used like such: ``string_explode``, ``string_reverse``, ``x
 ### 5. Properties
 
 This guide intentionally avoids any recommendation regarding the use of
-`var StudlyCaps`, `global.camelCase`, or `under_score` property names.
+`var StudlyCaps`, `global.camelCase`, or `under_score` variable names.
 
 Whatever naming convention is used SHOULD be applied consistently within a
-reasonable scope. That scope may be vendor-level, package-level, project-level,
-or object-level.
+reasonable scope. That scope MAY be vendor-level, package-level or project-level but SHOULD at least be project-level.
