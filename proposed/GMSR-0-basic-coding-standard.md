@@ -12,7 +12,7 @@ interpreted as described in [RFC 2119].
 
 ## 1. Projects
 
-- GM Projects MUST be GML-only (Not Drag & Drop)
+- GM Projects SHOULD be GML-only (Not Drag & Drop)
 
 ## 1.1. Versioning
 
@@ -38,14 +38,12 @@ interpreted as described in [RFC 2119].
 
 ## 2.2. Naming
 
-- All names after the prefixes MUST be `camelCase` or `snake_case`.
-This MUST consistent throughout the project scope. (Example: `snd_pickup_item` or `snd_pickupItem`)
-
+- All names after the prefixes MUST be `camelCase` or `snake_case` (Example: `snd_pickup_item` or `snd_pickupItem`). This MUST be consistent throughout the *project* scope.
 ## 3. GML declarations
 
 - Macro's / Constants MUST be declared in all upper case with underscore seperators. ( `MACRO_NAME` )
 - Global variables MUST use the `global.` prefix.
-- `globalvar` MUST NEVER be used.
+- `globalvar` MUST NOT be used.
 
 For example:
 ```gml
