@@ -16,9 +16,9 @@ To propose a Game Maker Standard Recommendation (GMSR):
 
 - create a ticket to start a discussion on Github; or,
 
-- start a conversation in the [/r/GameMaker Discord][].
+- start a conversation in the [Game Maker Hub Discord][] `#gamemakerstandards` channel.
 
-[/r/GameMaker Discord]: https://discord.gg/By6u9pC
+[Game Maker Hub Discord]: https://discord.gg/zEue3AM
 
 Language & Translations
 -----------------------
