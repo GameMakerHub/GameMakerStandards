@@ -132,13 +132,17 @@ var __tempScopeVariable = 0;
 
 ### 4.1. Script documentation
 
-Scripts SHOULD contain a description in a JSDoc Style comment block at the first line.
+Script documentation MUST follow JSDoc standards and syntax.
 
-If the description spans over multiple lines, all lines apart from the first MUST be indented with 4 spaces.
+Scripts SHOULD contain a description.
+
+The description MAY be prepended with @description, but only once.
+
+After the description there must be 1 empty comment line.
 
 Scripts MUST contain the parameters in a JSDoc Style comment block, at the first line, or after the description.
 
-Optional parameters MUST be enclosed in `[]`, and contain the default value, after an `=` sign.
+Scripts SHOULD contain a return type.
 
 There MUST be a blank line under the JSDoc block.
 
@@ -147,10 +151,12 @@ A proper script looks like the following. Note the placement of parentheses, com
 **is_same**
 ~~~gml
 /// @description Compare an instance object index with that of another.
-    /// Strict checking will make sure they are the same instance.
-/// @param {real} a The instance to match
-/// @param {real} b The second instance to match
-/// @param {bool} strict Make sure its the same instance instead of only type
+/// Strict checking will make sure they are the same instance.
+///
+/// @param {real} a - The instance to match
+/// @param {real} b - The second instance to match
+/// @param {bool} strict - Make sure its the same instance instead of only type
+/// @return {bool} result
 
 var _a = arugment0;
 var _b = arugment1;
@@ -176,7 +182,7 @@ Optional parameters MUST come last in the argument list.
 If a script has no optional parameters, the `argument0` structure MUST be used. If there is one or more 
 optional parameters in a script, the `argument[0]` (array notation) MUST be used. 
 
-If there are optional parameters, the script MUST include logic to error out if there are missing arguments.
+If there are optional parameters, the script MUST include logic to throw errors if there are missing arguments.
 
 **add_value**
 ~~~gml
@@ -199,7 +205,7 @@ return _a + _b;
 
 ### 4.3. Script return values
 
-If a script returns a unknown or undefined value, it MUST NOT return `-1`. 
+If a script returns a unknown or undefined value, it MUST NOT return `-1`.
 It SHOULD return `undefined` and MAY return `noone`.
 A script SHOULD return a value as soon as possible.
 
@@ -210,8 +216,9 @@ A script SHOULD return a value as soon as possible.
 **sort_script**
 ~~~gml
 /// @description Sorts values.
-/// @param {real} a The original value
-/// @param {real} b Comparison value
+/// @param {real} a - The original value
+/// @param {real} b - Comparison value
+/// @return {real} sortValue
 
 var _a = argument0;
 var _b = argument1;
@@ -386,15 +393,41 @@ for (var _i = 0; _i < 0; _i++) {
 
 Strings MUST be concatinated with spaces.
 Strings spanning multiple lines MUST be indented and the concatenation character 
-MUST reside on the same line.
+MUST reside on the next line.
 
 ~~~gml
-my_string = "This is string number " + string(number) + "!\n" +
-    "'t is a very long string indeed, " +
-    "but luckily we can span multiple lines.";
+my_string = "This is string number " + string(number) + "!\n"
+    + "'t is a very long string indeed, "
+    + "but luckily we can span multiple lines.";
 ~~~
 
+### 6.2. Accessors
 
+`ds_list`, `ds_map` and `ds_grid` variables MUST be accessed using accessors and MUST NOT use their respective access functions.
+
+`arrays` MAY be accesed using accessors, if needed.
+
+Accessor brackets MUST NOT have whitespace between them.
+
+Between the opening bracket and the accessor sign there MUST be a space.
+
+Multi-dimensional accessors MUST have a space after the comma sign.
+
+Example:
+~~~gml
+ds_list = ds_list_create();
+ds_map = ds_map_create();
+ds_grid = ds_grid_create(16, 16);
+array = ["1", "2", "3"];
+md_array = [[1, 2, 3], [4, 5, 6]];
+
+ds_list[| 0] = "Value";
+if (ds_map[? "Key"] == "Value") {
+    array[@ 1] = md_array[1, 0];
+    md_array[@ 2, 2] = 7;
+    ds_grid[# 8, 8] = array[1];
+}
+~~~
 
 ## 7. Comments
 
